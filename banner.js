@@ -32,6 +32,8 @@
     '<path pathLength="1" style="--k:4" d="M200 60L170 150M200 60L230 150M170 150L230 150"/>' +
     '</g><g class="mci-gem__glint"><path d="M140 60l6 14 14 6-14 6-6 14-6-14-14-6 14-6z"/><path d="M300 190l4 9 9 4-9 4-4 9-4-9-9-4 9-4z"/><path d="M215 250l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g></svg>';
 
+  window.__MCI_GEM = GEM;
+
   function wordify(html) {
     var n = 0, em = false, out = "";
     html.split(/(<em>|<\/em>)/).forEach(function (seg) {
@@ -148,7 +150,8 @@
     }
     var hoverPaused = false, userPaused = false;
     function sync() { hero.classList.toggle("is-paused", hoverPaused || userPaused); }
-    function restart() { clearTimeout(timer); sync(); if (!hoverPaused && !userPaused) timer = setTimeout(function () { go(cur + 1); }, DUR); }
+    var offscreen = false;
+    function restart() { clearTimeout(timer); sync(); if (!hoverPaused && !userPaused && !offscreen) timer = setTimeout(function () { go(cur + 1); }, DUR); }
     c.querySelectorAll(".mci-arrow").forEach(function (b) { b.addEventListener("click", function () { go(cur + +b.dataset.d); }); });
     dotEls.forEach(function (d, i) { d.addEventListener("click", function () { go(i); }); });
     var pb = c.querySelector(".mci-pause");
@@ -172,6 +175,13 @@
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1));
     }, { passive: true });
     document.addEventListener("visibilitychange", function () { document.hidden ? clearTimeout(timer) : restart(); });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) {
+        offscreen = !en[0].isIntersecting;
+        hero.classList.toggle("is-offscreen", offscreen);
+        if (offscreen) clearTimeout(timer); else restart();
+      }, { threshold: 0.05 }).observe(hero);
+    }
     go(0);
   }
 

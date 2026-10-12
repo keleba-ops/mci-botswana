@@ -1,0 +1,82 @@
+/* ===== look & feel polish ===== */
+html{scroll-behavior:smooth;scroll-padding-top:76px;scrollbar-color:#c9a07a #222c3a;scrollbar-width:thin}
+::selection{background:#e0b68f;color:#222c3a}
+h1,h2,h3{text-wrap:balance}
+html::-webkit-scrollbar{width:10px}
+html::-webkit-scrollbar-track{background:#222c3a}
+html::-webkit-scrollbar-thumb{background:#c9a07a;border:2px solid #222c3a;border-radius:6px}
+
+/* sticky header: transparent on the slides, solid navy once scrolled */
+main>section:first-child>header{position:fixed!important;top:0;left:0;right:0;z-index:50!important;transition:background .35s ease,box-shadow .35s ease}
+main>section:first-child>header>div{transition:padding .35s ease}
+.mci-scrolled main>section:first-child>header{background:rgba(27,36,48,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(224,182,143,.28),0 10px 30px rgba(10,16,24,.28)}
+.mci-scrolled main>section:first-child>header>div{padding-top:12px;padding-bottom:12px}
+.nav-link.mci-active{color:#fff1dc}
+.nav-link.mci-active::after{right:0}
+
+/* scroll progress + back to top */
+.mci-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#c9835a,#e0b68f,#fff1dc);box-shadow:0 0 10px rgba(224,182,143,.7);pointer-events:none}
+.mci-top{position:fixed;right:24px;bottom:24px;z-index:55;width:44px;height:44px;display:grid;place-items:center;color:#e0b68f;background:rgba(27,36,48,.92);border:1px solid rgba(224,182,143,.55);cursor:pointer;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .3s,transform .3s,background .25s,color .25s}
+.mci-top.is-on{opacity:1;transform:none;pointer-events:auto}
+.mci-top:hover,.mci-top:focus-visible{background:#e0b68f;color:#222c3a}
+.mci-top:focus-visible{outline:2px solid #fff1dc;outline-offset:3px}
+
+/* reveal on scroll */
+.mci-rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--rd,0ms),transform .9s cubic-bezier(.2,.7,.2,1) var(--rd,0ms)}
+.mci-rv.in{opacity:1;transform:none}
+.mci-rv.texture-frame{transform:translateY(26px) scale(.985)}
+.mci-rv.texture-frame.in{transform:none}
+
+/* hover details */
+#gathering article,#audience .border-t>div{transition:background .35s ease,box-shadow .35s ease,padding-left .35s ease}
+#gathering article:hover,#audience .border-t>div:hover{background:rgba(224,182,143,.09);box-shadow:inset 2px 0 0 #e0b68f;padding-left:14px}
+a.arrow-link:not([class*="bg-"]){background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0 1px;transition:background-size .4s ease,color .25s}
+a.arrow-link:not([class*="bg-"]):hover{background-size:100% 1px}
+.texture-frame img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.texture-frame:hover img{transform:scale(1.04)}
+
+/* animated timeline */
+.timeline-rule::after{content:"";position:absolute;top:11px;left:5px;width:1px;height:calc((100% - 23px)*var(--tl,0));background:linear-gradient(#e0b68f,#bd705c);box-shadow:0 0 10px rgba(224,182,143,.7);pointer-events:none}
+.timeline-dot{transition:background .5s ease,box-shadow .5s ease,transform .5s ease}
+.mci-lit .timeline-dot{background:#e0b68f;transform:scale(1.35);box-shadow:0 0 0 4px rgba(224,182,143,.28),0 0 16px rgba(224,182,143,.8)}
+
+/* diamond ornament on section seams */
+.mci-orn{height:0;position:relative;z-index:6;overflow:visible}
+.mci-orn::before,.mci-orn::after{content:"";position:absolute;top:0;width:min(130px,24vw);height:1px;opacity:0;transition:opacity .8s ease .3s,transform .9s cubic-bezier(.2,.7,.2,1) .2s}
+.mci-orn::before{right:calc(50% + 14px);background:linear-gradient(90deg,transparent,#e0b68f);transform-origin:100% 50%;transform:scaleX(.2)}
+.mci-orn::after{left:calc(50% + 14px);background:linear-gradient(270deg,transparent,#e0b68f);transform-origin:0 50%;transform:scaleX(.2)}
+.mci-orn i{position:absolute;left:50%;top:0;width:12px;height:12px;background:#222c3a;border:1px solid #e0b68f;transform:translate(-50%,-50%) rotate(45deg) scale(0);transition:transform .8s cubic-bezier(.2,.9,.3,1.3)}
+.mci-orn.in i{transform:translate(-50%,-50%) rotate(45deg) scale(1);box-shadow:0 0 14px rgba(224,182,143,.45)}
+.mci-orn.in::before,.mci-orn.in::after{opacity:1;transform:none}
+
+/* closing section: aurora + faint diamond, like the slides */
+.mci-cta-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.mci-cta-fx .mci-aurora::before,.mci-cta-fx .mci-aurora::after{opacity:.75}
+.mci-cta-fx .mci-aurora::before{left:-10%;top:10%}
+.mci-cta-fx .mci-aurora::after{left:auto;right:-8%;top:30%}
+.mci-cta-fx.in .mci-aurora::before{animation:mciDrift 15s ease-in-out infinite alternate}
+.mci-cta-fx.in .mci-aurora::after{animation:mciDrift 19s ease-in-out -6s infinite alternate-reverse}
+.mci-cta-fx .mci-gem{left:auto;right:5%;width:min(460px,36vw);opacity:.1;animation:none}
+.mci-cta-fx.in .mci-gem__lines path{animation:mciDraw 2.6s var(--mci-ease) calc(.3s + var(--k)*.3s) forwards}
+.mci-cta-fx.in .mci-gem__glint path{animation:mciGlint 5s ease-in-out infinite}
+.mci-cta-fx .mci-gem__glint path:nth-child(1){animation-delay:2s}
+.mci-cta-fx .mci-gem__glint path:nth-child(2){animation-delay:3.4s}
+.mci-cta-fx .mci-gem__glint path:nth-child(3){animation-delay:4.6s}
+
+/* save battery: freeze animations that are off screen */
+.mci-hero.is-offscreen *,.mci-hero.is-offscreen *::before,.mci-hero.is-offscreen *::after{animation-play-state:paused!important}
+.mci-cta-fx:not(.in) *,.mci-cta-fx:not(.in) *::before,.mci-cta-fx:not(.in) *::after{animation-play-state:paused!important}
+
+@media (max-width:767px){
+ .mci-top{right:16px;bottom:16px}
+ #gathering article:hover,#audience .border-t>div:hover{padding-left:0;box-shadow:none;background:none}
+ .mci-cta-fx .mci-gem{opacity:.07}
+}
+@media (prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .mci-rv{opacity:1;transform:none;transition:none}
+ .mci-orn::before,.mci-orn::after{opacity:1;transform:none;transition:none}
+ .mci-orn i{transform:translate(-50%,-50%) rotate(45deg);transition:none}
+ .mci-cta-fx .mci-gem__lines path{stroke-dashoffset:0;animation:none}
+ .mci-cta-fx .mci-aurora::before,.mci-cta-fx .mci-aurora::after{animation:none}
+}
