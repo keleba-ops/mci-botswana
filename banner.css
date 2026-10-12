@@ -179,3 +179,25 @@ main>section:first-child>header{z-index:40}
  .mci-layer.is-active .mci-layer__media img,.mci-hero.mci-on>img:first-child{transform:none;transition:none}
  .mci-dot.is-active i{animation:none;width:100%}
 }
+
+/* --- pause button, swipe, countdown --- */
+.mci-hero{touch-action:pan-y}
+.mci-pause{width:40px;height:40px;display:grid;place-items:center;margin-left:auto;margin-right:12px;border:1px solid rgba(243,239,229,.45);background:rgba(34,44,58,.35);color:#f3efe5;cursor:pointer;border-radius:50%;transition:background .25s,color .25s}
+.mci-pause:hover,.mci-pause:focus-visible{background:var(--mci-gold);border-color:var(--mci-gold);color:var(--mci-navy)}
+.mci-controls__in{justify-content:flex-start}
+.mci-count{margin-left:20px}
+.mci-dot:focus-visible,.mci-arrow:focus-visible,.mci-pause:focus-visible{outline:2px solid #fff1dc;outline-offset:3px}
+.mci-countdown{position:relative;background:linear-gradient(180deg,#1b2430,#222c3a);color:#f3efe5;border-top:1px solid rgba(224,182,143,.35);border-bottom:1px solid rgba(224,182,143,.15)}
+.mci-countdown[hidden]{display:none}
+.mci-countdown__in{max-width:1440px;margin:0 auto;padding:36px 24px;display:flex;flex-wrap:wrap;gap:28px 48px;align-items:center;justify-content:space-between}
+.mci-countdown__eyebrow{color:var(--mci-gold);margin:0}
+.mci-countdown__date{margin:8px 0 0;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.05}
+.mci-countdown__note{margin:8px 0 0;font-size:12px;letter-spacing:.04em;color:rgba(243,239,229,.65)}
+.mci-countdown__units{display:flex;gap:clamp(14px,3vw,36px)}
+.mci-unit{min-width:68px;text-align:center}
+.mci-unit b{display:block;font:400 clamp(2.2rem,5vw,3.8rem)/1 "Instrument Serif",Georgia,serif;color:#fff1dc;font-variant-numeric:tabular-nums}
+.mci-unit b.tick{animation:mciTick .5s var(--mci-ease)}
+.mci-unit span{display:block;margin-top:8px;font:500 9px/1 "DM Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,239,229,.6)}
+@media (min-width:768px){.mci-countdown__in{padding-left:48px;padding-right:48px}}
+@media (min-width:1280px){.mci-countdown__in{padding-left:80px;padding-right:80px}}
+@media (max-width:767px){.mci-pause{margin-right:8px}.mci-count{display:none}.mci-countdown__units{width:100%;justify-content:space-between}.mci-unit{min-width:0}}

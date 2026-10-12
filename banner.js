@@ -1,10 +1,11 @@
 (function () {
   var DUR = 8000;
   var layers = [
-    { img: "./assets/banner-ministry.jpg", alt: "Ministry of Mines and Minerals, Republic of Botswana",
+    { img: "./assets/banner-ministry.da730ee9.webp", alt: "Ministry of Mines and Minerals, Republic of Botswana",
       eyebrow: "Republic of Botswana · MME", ghost: "MME",
-      title: "A Ministry of <em>Mines and Minerals</em> Investment" },
-    { img: "./assets/banner-pula-to-purpose.jpg", alt: "Pula to Purpose",
+      title: "A Ministry of <em>Mines and Minerals</em> Investment",
+      lede: "Investing in Botswana\u2019s minerals future \u2014 from a celebrated diamond legacy to responsible, lasting value." },
+    { img: "./assets/banner-pula-to-purpose.00493f44.webp", alt: "Pula to Purpose",
       eyebrow: "A Botswana project", ghost: "PULA",
       title: "Pula <em>to</em> Purpose",
       lede: "A project based on what the rough diamond has endured — to a shining legacy in the ethos of the development of Botswana." }
@@ -15,6 +16,8 @@
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var arrowL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
   var arrowR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
+  var ICON_PAUSE = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+  var ICON_PLAY = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
   var pad = function (n) { return (n < 10 ? "0" : "") + n; };
 
 
@@ -100,6 +103,7 @@
     var dots = "";
     for (var i = 0; i < TOTAL; i++) dots += '<button class="mci-dot" type="button" aria-label="Go to slide ' + (i + 1) + '"><i></i></button>';
     c.innerHTML = '<div class="mci-controls__in"><div class="mci-dots">' + dots + '</div><span class="mci-count" aria-live="off"></span>' +
+      '<button class="mci-pause" type="button" aria-pressed="false" aria-label="Pause slideshow">' + ICON_PAUSE + '</button>' +
       '<div class="mci-arrows"><button class="mci-arrow" data-d="-1" type="button" aria-label="Previous slide">' + arrowL + "</button>" +
       '<button class="mci-arrow" data-d="1" type="button" aria-label="Next slide">' + arrowR + "</button></div></div>";
     hero.appendChild(c);
@@ -142,23 +146,62 @@
       count.innerHTML = "<b>" + pad(n + 1) + "</b> / " + pad(TOTAL);
       cur = n; first = false; restart();
     }
-    function restart() { clearTimeout(timer); if (!hero.classList.contains("is-paused")) timer = setTimeout(function () { go(cur + 1); }, DUR); }
+    var hoverPaused = false, userPaused = false;
+    function sync() { hero.classList.toggle("is-paused", hoverPaused || userPaused); }
+    function restart() { clearTimeout(timer); sync(); if (!hoverPaused && !userPaused) timer = setTimeout(function () { go(cur + 1); }, DUR); }
     c.querySelectorAll(".mci-arrow").forEach(function (b) { b.addEventListener("click", function () { go(cur + +b.dataset.d); }); });
     dotEls.forEach(function (d, i) { d.addEventListener("click", function () { go(i); }); });
-    function pause() { hero.classList.add("is-paused"); clearTimeout(timer); }
-    function resume() { hero.classList.remove("is-paused"); restart(); }
+    var pb = c.querySelector(".mci-pause");
+    pb.addEventListener("click", function () {
+      userPaused = !userPaused;
+      pb.setAttribute("aria-pressed", userPaused);
+      pb.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
+      pb.innerHTML = userPaused ? ICON_PLAY : ICON_PAUSE;
+      if (userPaused) { clearTimeout(timer); sync(); } else { go(cur); }
+    });
+    function pause() { hoverPaused = true; sync(); clearTimeout(timer); }
+    function resume() { hoverPaused = false; restart(); }
     hero.addEventListener("mouseenter", pause); hero.addEventListener("mouseleave", resume);
     hero.addEventListener("focusin", pause); hero.addEventListener("focusout", resume);
     hero.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") go(cur + 1); if (e.key === "ArrowLeft") go(cur - 1); });
+    /* swipe on touch screens */
+    var tx = 0, ty = 0;
+    hero.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+    hero.addEventListener("touchend", function (e) {
+      var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1));
+    }, { passive: true });
     document.addEventListener("visibilitychange", function () { document.hidden ? clearTimeout(timer) : restart(); });
     go(0);
+  }
+
+
+  var EVENT = new Date("2027-02-07T00:00:00+02:00").getTime();
+  function buildCountdown() {
+    var s = document.createElement("section");
+    s.className = "mci-countdown";
+    s.setAttribute("aria-label", "Countdown to the proposed date");
+    s.innerHTML = '<div class="mci-countdown__in"><div class="mci-countdown__lead"><p class="eyebrow mci-countdown__eyebrow">Proposed date</p>' +
+      '<p class="mci-countdown__date">Sunday 7 February 2027</p><p class="mci-countdown__note">Cape Town \u00b7 date and venue subject to confirmation</p></div>' +
+      '<div class="mci-countdown__units" role="timer" aria-live="off">' +
+      ["Days", "Hours", "Minutes", "Seconds"].map(function (l) { return '<div class="mci-unit"><b data-u="' + l + '">00</b><span>' + l + "</span></div>"; }).join("") + "</div></div>";
+    var nodes = {}; s.querySelectorAll("b").forEach(function (b) { nodes[b.dataset.u] = b; });
+    function put(k, v) { var t = v < 10 ? "0" + v : "" + v; if (nodes[k].textContent !== t) { nodes[k].textContent = t; nodes[k].classList.remove("tick"); void nodes[k].offsetWidth; nodes[k].classList.add("tick"); } }
+    function tick() {
+      var d = EVENT - Date.now();
+      if (d <= 0) { s.hidden = true; return; }
+      var sec = Math.floor(d / 1000);
+      put("Days", Math.floor(sec / 86400)); put("Hours", Math.floor(sec % 86400 / 3600)); put("Minutes", Math.floor(sec % 3600 / 60)); put("Seconds", sec % 60);
+    }
+    tick(); setInterval(function () { if (!document.hidden) tick(); }, 1000);
+    return s;
   }
 
   function inject() {
     var hero = document.querySelector("main>section");
     var f = document.querySelector("footer");
     if (!hero || !f) return false;
-    if (!hero.classList.contains("mci-hero")) build(hero);
+    if (!hero.classList.contains("mci-hero")) { build(hero); hero.after(buildCountdown()); }
     if (!f.querySelector(".mci-credit")) {
       var p = document.createElement("p");
       p.className = "mci-credit";
