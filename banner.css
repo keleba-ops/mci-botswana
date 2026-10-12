@@ -73,7 +73,7 @@ main>section:first-child>header{z-index:40}
 .mci-layer.is-active .mci-aurora::before{opacity:1;animation:mciDrift 15s ease-in-out infinite alternate}
 .mci-layer.is-active .mci-aurora::after{opacity:1;animation:mciDrift 19s ease-in-out -6s infinite alternate-reverse}
 @keyframes mciDrift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(9%,-12%,0) scale(1.18)}}
-.mci-gem{position:absolute;left:min(2vw,40px);top:50%;width:min(560px,44vw);height:auto;transform:translateY(-46%) rotate(-6deg);opacity:.5;overflow:visible}
+.mci-gem{position:absolute;left:min(2vw,40px);top:50%;width:min(560px,44vw);height:auto;transform:translateY(-46%) rotate(-6deg);opacity:.16;overflow:visible}
 .mci-gem__lines path{stroke-dasharray:1;stroke-dashoffset:1}
 .mci-layer.is-active .mci-gem__lines path{animation:mciDraw 2.2s var(--mci-ease) calc(.5s + var(--k)*.28s) forwards}
 @keyframes mciDraw{to{stroke-dashoffset:0}}
@@ -81,7 +81,7 @@ main>section:first-child>header{z-index:40}
 .mci-layer.is-active .mci-gem__fill path{animation:mciFacet 6s ease-in-out infinite}
 .mci-gem__fill path:nth-child(1){animation-delay:2.2s!important}.mci-gem__fill path:nth-child(2){animation-delay:3s!important}
 .mci-gem__fill path:nth-child(3){animation-delay:3.8s!important}.mci-gem__fill path:nth-child(4){animation-delay:4.6s!important}.mci-gem__fill path:nth-child(5){animation-delay:5.4s!important}
-@keyframes mciFacet{0%,100%{opacity:0}12%{opacity:.16}30%{opacity:0}}
+@keyframes mciFacet{0%,100%{opacity:0}12%{opacity:.07}30%{opacity:0}}
 .mci-gem__glint path{fill:#fff1dc;opacity:0;transform-box:fill-box;transform-origin:center}
 .mci-layer.is-active .mci-gem__glint path{animation:mciGlint 4.5s ease-in-out infinite}
 .mci-gem__glint path:nth-child(1){animation-delay:2.6s}.mci-gem__glint path:nth-child(2){animation-delay:4s}.mci-gem__glint path:nth-child(3){animation-delay:5.3s}
@@ -100,12 +100,12 @@ main>section:first-child>header{z-index:40}
 
 
 /* --- diamond effects: faceted gems, sparkles, fire --- */
-.mci-gem{filter:drop-shadow(0 0 24px rgba(224,182,143,.38))}
+.mci-gem{filter:drop-shadow(0 0 14px rgba(224,182,143,.12))}
 .mci-gem__fire path{fill:url(#mciS);opacity:0}
 .mci-layer.is-active .mci-gem__fire path{animation:mciFire 5s ease-in-out infinite}
 .mci-gem__fire path:nth-child(1){animation-delay:2.4s!important}.mci-gem__fire path:nth-child(2){animation-delay:3.4s!important}
 .mci-gem__fire path:nth-child(3){animation-delay:4.4s!important}.mci-gem__fire path:nth-child(4){animation-delay:5.4s!important}
-@keyframes mciFire{0%,100%{opacity:0}10%{opacity:.34}26%{opacity:0}}
+@keyframes mciFire{0%,100%{opacity:0}10%{opacity:.12}26%{opacity:0}}
 .mci-gems{position:absolute;inset:0;z-index:17;pointer-events:none;overflow:hidden}
 .mci-gems .g{position:absolute;bottom:-30px;width:var(--s);height:calc(var(--s)*.86);opacity:0;
  filter:drop-shadow(0 0 7px rgba(255,244,225,.75));animation:mciRise var(--d) linear var(--dl) infinite}
@@ -123,7 +123,7 @@ main>section:first-child>header{z-index:40}
  clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);
  filter:drop-shadow(0 0 4px #fff1dc);animation:mciTwinkle var(--d) ease-in-out var(--dl) infinite}
 @keyframes mciTwinkle{0%,100%{opacity:0;transform:scale(.2) rotate(0)}45%{opacity:1;transform:scale(1) rotate(45deg)}70%{opacity:0;transform:scale(.3) rotate(90deg)}}
-@media (max-width:767px){.mci-gems .g:nth-child(n+6),.mci-gems .st:nth-child(n+16){display:none}}
+@media (max-width:767px){.mci-gems .g:nth-child(n+3),.mci-gems .st:nth-child(n+8){display:none}.mci-gem{opacity:.12}}
 
 /* --- gold dust (ambient, over all slides) --- */
 .mci-dust{position:absolute;inset:0;z-index:17;pointer-events:none;overflow:hidden}

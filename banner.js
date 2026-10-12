@@ -82,14 +82,14 @@
       var gems = document.createElement("div");
       gems.className = "mci-gems";
       gems.setAttribute("aria-hidden", "true");
-      for (var g = 0; g < 9; g++) {
+      for (var g = 0; g < 4; g++) {
         var el = document.createElement("span");
         el.className = "g";
         el.style.cssText = "left:" + ((g * 41 + 11) % 92) + "%;--s:" + (12 + (g * 5) % 16) + "px;--d:" + (16 + (g * 3) % 10) + "s;--dl:-" + ((g * 4) % 18) + "s;--x:" + (((g * 29) % 140) - 70) + "px;--r:" + (3 + (g % 4)) + "s";
         el.innerHTML = "<i></i>";
         gems.appendChild(el);
       }
-      for (var q = 0; q < 14; q++) {
+      for (var q = 0; q < 6; q++) {
         var st = document.createElement("span");
         st.className = "st";
         st.style.cssText = "left:" + ((q * 37 + 5) % 96) + "%;top:" + ((q * 23 + 9) % 82 + 6) + "%;--s:" + (10 + (q * 3) % 12) + "px;--dl:" + ((q * 7) % 11) / 2 + "s;--d:" + (3 + (q % 4)) + "s";
