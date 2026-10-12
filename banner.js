@@ -1,9 +1,9 @@
 (function () {
   var DUR = 8000;
   var layers = [
-    { img: "./assets/banner-ministry.da730ee9.webp", alt: "Ministry of Mines and Minerals, Republic of Botswana",
+    { img: "./assets/banner-ministry.da730ee9.webp", alt: "Ministry of Minerals and Energy, Republic of Botswana",
       eyebrow: "Republic of Botswana · MME", ghost: "MME",
-      title: "A Ministry of <em>Mines and Minerals</em> Investment",
+      title: "A Ministry of <em>Minerals and Energy</em> Investment",
       lede: "Investing in Botswana\u2019s minerals future \u2014 from a celebrated diamond legacy to responsible, lasting value." },
     { img: "./assets/banner-pula-to-purpose.00493f44.webp", alt: "Pula to Purpose",
       eyebrow: "A Botswana project", ghost: "PULA",
